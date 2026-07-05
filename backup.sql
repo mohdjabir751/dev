@@ -1,4 +1,4 @@
-create or replace PACKAGE pkg_benefeciary_management AS
+create or replace PACKAGE  package_bnf_managament AS
     --------------------------------------------------------------------------
     -- Public helper functions. They are exposed so developers can test the same
     -- simple normalization, masking and dedupe rules used by the package body.
@@ -354,11 +354,11 @@ create or replace PACKAGE pkg_benefeciary_management AS
         p_err_code OUT VARCHAR2
     );
 
-END pkg_benefeciary_management;
+END package_bnf_pns;
 
 
 ===================================================
-create or replace PACKAGE BODY pkg_benefeciary_management AS
+create or replace PACKAGE BODY package_bnf_pns AS
 
 /*
 * Aniket:
@@ -2055,9 +2055,9 @@ EXCEPTION
         p_resp     := '{"status":"FAILURE"}';
 
         BEGIN
-            pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_save_scheme',
+            package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_save_scheme',
                 p_type        => 1,
                 p_ref_no      => l_scheme_id,
                 p_err_code    => p_err_code,
@@ -2075,9 +2075,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-            pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_save_scheme',
+            package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_save_scheme',
                 p_type        => 1,
                 p_ref_no      => l_scheme_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -2092,7 +2092,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -2848,9 +2848,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_save_scheme_field_mapping',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_save_scheme_field_mapping',
                 p_type        => 1,
                 p_ref_no      => l_scheme_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -2864,7 +2864,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -3001,9 +3001,9 @@ EXCEPTION
         l_err_msg   VARCHAR2(4000);
         l_err_code  VARCHAR2(100);
     BEGIN
-        l_group_id := pkg_benefeciary_management.f_json_number(p_req, '$.group_id');
+        l_group_id := package_bnf_pns.f_json_number(p_req, '$.group_id');
         l_user := nvl(
-            pkg_benefeciary_management.f_json_varchar(p_req, '$.created_by'),
+            package_bnf_pns.f_json_varchar(p_req, '$.created_by'),
             user
         );
         IF l_group_id IS NULL THEN
@@ -3319,9 +3319,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_create_beneficiary_group',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_create_beneficiary_group',
                 p_type        => 1,
                 p_ref_no      => l_group_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -3335,7 +3335,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -4090,19 +4090,19 @@ IF l_type = 1 THEN --------Added by pravesh & Vivek 29062026--------------------
                 'null'
             )     
                      || ',"group_name":'
-                     || pkg_benefeciary_management.f_json_quote(r.group_name)
+                     || package_bnf_pns.f_json_quote(r.group_name)
                      || ',"scheme_id":'
-                     || pkg_benefeciary_management.f_json_quote(r.scheme_id)
+                     || package_bnf_pns.f_json_quote(r.scheme_id)
                      || ',"scheme_name":'
-                     || pkg_benefeciary_management.f_json_quote(r.scheme_name)
+                     || package_bnf_pns.f_json_quote(r.scheme_name)
                      || ',"upload_mode":'
-                     || pkg_benefeciary_management.f_json_quote(r.upload_mode)
+                     || package_bnf_pns.f_json_quote(r.upload_mode)
                      || ',"process_status":'
-                     || pkg_benefeciary_management.f_json_quote(r.process_status)
+                     || package_bnf_pns.f_json_quote(r.process_status)
                      || ',"processed_flag":'
-                     || pkg_benefeciary_management.f_json_quote(r.processed_flag)
+                     || package_bnf_pns.f_json_quote(r.processed_flag)
                      || ',"active_flag":'
-                     || pkg_benefeciary_management.f_json_quote(r.active_flag)     
+                     || package_bnf_pns.f_json_quote(r.active_flag)     
                      || '}';
 
             l_first := FALSE;
@@ -5845,9 +5845,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_stage_beneficiaries',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_stage_beneficiaries',
                 p_type        => 1,
                 p_ref_no      => l_group_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -5861,7 +5861,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -6135,9 +6135,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_update_stage_rows',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_update_stage_rows',
                 p_type        => 1,
                 p_ref_no      => l_group_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -6151,7 +6151,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -6302,7 +6302,7 @@ BEGIN
             -- REVALIDATE GROUP AFTER DELETE
             ------------------------------------------------------------------
 
-            pkg_benefeciary_management.pr_validate_group_v1(
+            package_bnf_pns.pr_validate_group_v1(
                 p_req,
                 l_group_resp,
                 l_status2,
@@ -7363,9 +7363,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_get_group_validation_result',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_get_group_validation_result',
                 p_type        => 1,
                 p_ref_no      => l_group_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -7379,7 +7379,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -7693,9 +7693,9 @@ EXCEPTION
 --        ROLLBACK;
 --
 --        BEGIN
---           pkg_benefeciary_management.ots_benf_error_log(
---                p_module_name => 'pkg_benefeciary_management',
---                p_proc_name   => 'pkg_benefeciary_management.pr_process_group',
+--           package_bnf_pns.ots_benf_error_log(
+--                p_module_name => 'package_bnf_pns',
+--                p_proc_name   => 'package_bnf_pns.pr_process_group',
 --                p_type        => 1,
 --                p_ref_no      => l_group_id,
 --                p_err_code    => TO_CHAR(SQLCODE),
@@ -7709,7 +7709,7 @@ EXCEPTION
 --                NULL;
 --        END;
 --
---        pkg_benefeciary_management.p_set_error(
+--        package_bnf_pns.p_set_error(
 --            SQLERRM,
 --            TO_CHAR(SQLCODE),
 --            p_resp,
@@ -8053,9 +8053,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_process_group',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_process_group',
                 p_type        => 1,
                 p_ref_no      => l_group_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -8069,7 +8069,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -8293,9 +8293,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_save_individual_beneficiary',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_save_individual_beneficiary',
                 p_type        => 1,
                 p_ref_no      => l_payee_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -8324,7 +8324,7 @@ EXCEPTION
         );
 END;
 -----------------------------------------------------
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -8527,8 +8527,8 @@ EXCEPTION
         ROLLBACK;
         
         BEGIN
-            pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
+            package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
                 p_proc_name   => 'pr_get_individual_beneficiaries',
                 p_type        => 1,
                 p_ref_no      => l_office_id,
@@ -8542,7 +8542,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -8567,9 +8567,9 @@ END pr_get_individual_beneficiaries;
         l_user     VARCHAR2(100);
         l_rows     tab_beneficiary_stage_in := tab_beneficiary_stage_in();
     BEGIN
-        l_group_id := pkg_benefeciary_management.f_json_number(p_req, '$.group_id');
+        l_group_id := package_bnf_pns.f_json_number(p_req, '$.group_id');
         l_user := nvl(
-            pkg_benefeciary_management.f_json_varchar(p_req, '$.created_by'),
+            package_bnf_pns.f_json_varchar(p_req, '$.created_by'),
             user
         );
         FOR r IN (
@@ -8638,7 +8638,7 @@ END pr_get_individual_beneficiaries;
 
         END LOOP;
 
-        pkg_benefeciary_management.pr_stage_beneficiaries_bulk(
+        package_bnf_pns.pr_stage_beneficiaries_bulk(
             p_group_id   => l_group_id,
             p_created_by => l_user,
             p_rows       => l_rows,
@@ -8655,9 +8655,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_stage_beneficiaries_bulk_from_json',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_stage_beneficiaries_bulk_from_json',
                 p_type        => 1,
                 p_ref_no      => l_group_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -8671,7 +8671,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -8725,13 +8725,13 @@ PROCEDURE pr_validate_group_v1 (
 		l_dup_type        t_dup_map;
 		l_duplicate_type  VARCHAR2(20);
     BEGIN
-        l_group_id := pkg_benefeciary_management.f_json_number(p_req, '$.group_id');
+        l_group_id := package_bnf_pns.f_json_number(p_req, '$.group_id');
         l_user := nvl(
-            pkg_benefeciary_management.f_json_varchar(p_req, '$.validated_by'),
+            package_bnf_pns.f_json_varchar(p_req, '$.validated_by'),
             user
         );
       --  p_assert_group_exists(l_group_id);
-        pkg_benefeciary_management.p_assert_group_editable(l_group_id);
+        package_bnf_pns.p_assert_group_editable(l_group_id);
         SELECT
             scheme_id
         INTO l_scheme_id
@@ -8892,7 +8892,7 @@ else
     ------------------------------------------------------------------
     IF TRIM(s.beneficiary_name) IS NULL THEN
     
-        pkg_benefeciary_management.p_append_error(
+        package_bnf_pns.p_append_error(
             l_errors,
             l_err_count,
             'BENEFICIARY_NAME',
@@ -8912,7 +8912,7 @@ END IF;
 								FOR i IN 1 .. l_validations.COUNT LOOP
 
 									l_value :=
-										pkg_benefeciary_management.f_get_stage_value(
+										package_bnf_pns.f_get_stage_value(
 											s,
 											l_validations(i).column_name
 										);
@@ -8922,7 +8922,7 @@ END IF;
                                      AND UPPER(l_validations(i).column_name) <> 'AADHAAR_REF_NO'
 									THEN
 
-										pkg_benefeciary_management.p_append_error(
+										package_bnf_pns.p_append_error(
 											l_errors,
 											l_err_count,
 											l_validations(i).column_name,
@@ -8935,12 +8935,12 @@ END IF;
 
 										IF l_validations(i).attr_type = 'MOBILE'
 										   AND (
-												pkg_benefeciary_management.f_validate_mobile(l_value) = 'N'
+												package_bnf_pns.f_validate_mobile(l_value) = 'N'
 												OR l_duplicate_type = 'MOBILE'
 										   )
 										THEN
 
-											pkg_benefeciary_management.p_append_error(
+											package_bnf_pns.p_append_error(
 												l_errors,
 												l_err_count,
 												l_validations(i).column_name,
@@ -8950,10 +8950,10 @@ END IF;
 											);
 
 										ELSIF l_validations(i).attr_type = 'IFSC'
-											  AND pkg_benefeciary_management.f_validate_ifsc(l_value) = 'N'
+											  AND package_bnf_pns.f_validate_ifsc(l_value) = 'N'
 										THEN
 
-											pkg_benefeciary_management.p_append_error(
+											package_bnf_pns.p_append_error(
 												l_errors,
 												l_err_count,
 												'IFSC_CODE',
@@ -8965,12 +8965,12 @@ END IF;
 -----------------------------------05062026--------------------------------------
 --										ELSIF l_validations(i).attr_type = 'AADHAAR'
 --											  AND (
---													pkg_benefeciary_management.f_validate_aadhaar(l_value) = 'N'
+--													package_bnf_pns.f_validate_aadhaar(l_value) = 'N'
 --													OR l_duplicate_type = 'AADHAAR'
 --												  )
 --										THEN
 --
---											pkg_benefeciary_management.p_append_error(
+--											package_bnf_pns.p_append_error(
 --												l_errors,
 --												l_err_count,
 --												l_validations(i).column_name,
@@ -8994,7 +8994,7 @@ END IF;
                                             )
                                             THEN
 
-											pkg_benefeciary_management.p_append_error(
+											package_bnf_pns.p_append_error(
 												l_errors,
 												l_err_count,
 												'ACCOUNT_NO',
@@ -9011,7 +9011,7 @@ END IF;
 												  )
 										THEN
 
-											pkg_benefeciary_management.p_append_error(
+											package_bnf_pns.p_append_error(
 												l_errors,
 												l_err_count,
 												'JAN_AADHAR_ID',
@@ -9191,9 +9191,9 @@ END IF;
               systimestamp,
               s.user_name );
 
-        pkg_benefeciary_management.p_insert_group_run_detail(l_group_id, 'VALIDATE', l_status, l_user, 'Group validation completed');
+        package_bnf_pns.p_insert_group_run_detail(l_group_id, 'VALIDATE', l_status, l_user, 'Group validation completed');
         COMMIT;
-        pkg_benefeciary_management.p_set_success('{"group_id":'
+        package_bnf_pns.p_set_success('{"group_id":'
                       || l_group_id
                       || ',"total_rows":'
                       || l_total
@@ -9202,7 +9202,7 @@ END IF;
                       || ',"validation_run_no":'
                       || l_run_no
                       || ',"process_status":'
-                      || pkg_benefeciary_management.f_json_quote(l_status)
+                      || package_bnf_pns.f_json_quote(l_status)
                       || '}',
                       p_resp,
                       p_status,
@@ -9216,9 +9216,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-           pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_validate_group_v1',
+           package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_pns',
+                p_proc_name   => 'package_bnf_pns.pr_validate_group_v1',
                 p_type        => 1,
                 p_ref_no      => l_group_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -9232,7 +9232,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_pns.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -9281,15 +9281,15 @@ ELSE
 END IF;
 -------------------------------------------------------------------------------
         l_type := upper(trim(JSON_VALUE(p_req, '$.type' RETURNING VARCHAR2)));
-        l_user := nvl(pkg_benefeciary_management.f_json_varchar(p_req, '$.created_by'),user);
-        e_group_id := pkg_benefeciary_management.f_json_number(p_req, '$.group_id');
-        e_scheme_id := pkg_benefeciary_management.f_json_number(p_req, '$.scheme_id');
+        l_user := nvl(package_bnf_pns.f_json_varchar(p_req, '$.created_by'),user);
+        e_group_id := package_bnf_pns.f_json_number(p_req, '$.group_id');
+        e_scheme_id := package_bnf_pns.f_json_number(p_req, '$.scheme_id');
 
     ------------------------------------------------------------------
     -- INDIVIDUAL BENEFICIARY FLOW
     ------------------------------------------------------------------
         IF (e_group_id IS NULL AND e_scheme_id IS NULL) THEN
-            pkg_benefeciary_management.pr_save_individual_beneficiary(p_req, p_resp, p_status, p_err_msg, p_err_code);
+            package_bnf_pns.pr_save_individual_beneficiary(p_req, p_resp, p_status, p_err_msg, p_err_code);
             dbms_output.put_line('Individual beneficiary saved');
 
     ------------------------------------------------------------------
@@ -9297,28 +9297,28 @@ END IF;
     ------------------------------------------------------------------
 
         ELSIF ( e_group_id IS NULL AND e_scheme_id IS NOT NULL ) THEN
-            pkg_benefeciary_management.pr_save_scheme(p_req, l_scheme_resp, l_status, l_err_msg, l_err_code);
+            package_bnf_pns.pr_save_scheme(p_req, l_scheme_resp, l_status, l_err_msg, l_err_code);
             dbms_output.put_line('scheme successfully dumped');
-            l_scheme_id := pkg_benefeciary_management.f_json_number(l_scheme_resp, '$.scheme_id');
-            pkg_benefeciary_management.pr_save_scheme_field_mapping(p_req, l_scheme_resp, l_status, l_err_msg, l_err_code);
+            l_scheme_id := package_bnf_managament.f_json_number(l_scheme_resp, '$.scheme_id');
+            package_bnf_managament.pr_save_scheme_field_mapping(p_req, l_scheme_resp, l_status, l_err_msg, l_err_code);
             dbms_output.put_line('field successfully dumped');
-            pkg_benefeciary_management.pr_create_beneficiary_group(p_req, l_group_resp, l_status, l_err_msg, l_err_code);
-            l_group_id := pkg_benefeciary_management.f_json_number(l_group_resp, '$.data.group_id');
+            package_bnf_managament.pr_create_beneficiary_group(p_req, l_group_resp, l_status, l_err_msg, l_err_code);
+            l_group_id := package_bnf_managament.f_json_number(l_group_resp, '$.data.group_id');
             --dbms_output.put_line('l_group_id=' || l_group_id);---03-6-26
             l_req := regexp_replace(p_req, '"group_id"\s*:\s*null', '"group_id":' || l_group_id);
           --  dbms_output.put_line('l_req=' || l_req);
-           pkg_benefeciary_management.pr_stage_beneficiaries(l_req, l_group_resp, l_status, l_err_msg, l_err_code); ----0806026
-           --pkg_benefeciary_management.pr_stage_beneficiaries_bulk_from_json(l_req, l_group_resp, l_status, l_err_msg, l_err_code);-----pravesh---08062026
+           package_bnf_managament.pr_stage_beneficiaries(l_req, l_group_resp, l_status, l_err_msg, l_err_code); ----0806022
+           --package_bnf_managament.pr_stage_beneficiaries_bulk_from_json(l_req, l_group_resp, l_status, l_err_msg, l_err_code);-------08062022
             dbms_output.put_line('beneficiary staged');
-            pkg_benefeciary_management.pr_validate_group_v1(l_req, l_group_resp, l_status, l_err_msg, l_err_code);
+            package_bnf_managament.pr_validate_group_v1(l_req, l_group_resp, l_status, l_err_msg, l_err_code);
             dbms_output.put_line('validation success');
             
             dbms_output.put_line('master data success');
-            pkg_benefeciary_management.pr_get_group_validation_result(l_req, p_resp, p_status, p_err_msg, p_err_code);
-            l_processed_status := pkg_benefeciary_management.f_json_varchar(p_resp, '$.data.group_summary.process_status');
+            package_bnf_managament.pr_get_group_validation_result(l_req, p_resp, p_status, p_err_msg, p_err_code);
+            l_processed_status := package_bnf_managament.f_json_varchar(p_resp, '$.data.group_summary.process_status');
             --dbms_output.put_line('l_processed_status:  ' || l_processed_status);
             IF l_processed_status = 'VALIDATED' THEN
-                pkg_benefeciary_management.pr_process_group(l_req, l_group_resp, l_status, l_err_msg, l_err_code);
+                package_bnf_managament.pr_process_group(l_req, l_group_resp, l_status, l_err_msg, l_err_code);
         
                     END IF;
 
@@ -9328,12 +9328,12 @@ END IF;
 
         ELSE
                 
-            pkg_benefeciary_management.pr_update_stage_rows(p_req, p_resp, p_status, p_err_msg, p_err_code);
-            pkg_benefeciary_management.pr_validate_group_v1(p_req, l_group_resp, l_status, l_err_msg, l_err_code);
-            pkg_benefeciary_management.pr_get_group_validation_result(p_req, p_resp, p_status, p_err_msg, p_err_code);
-           l_processed_status := pkg_benefeciary_management.f_json_varchar(p_resp, '$.data.group_summary.process_status');
+            package_bnf_managament.pr_update_stage_rows(p_req, p_resp, p_status, p_err_msg, p_err_code);
+            package_bnf_managament.pr_validate_group_v1(p_req, l_group_resp, l_status, l_err_msg, l_err_code);
+            package_bnf_managament.pr_get_group_validation_result(p_req, p_resp, p_status, p_err_msg, p_err_code);
+           l_processed_status := package_bnf_managament.f_json_varchar(p_resp, '$.data.group_summary.process_status');
             IF l_processed_status = 'VALIDATED' THEN
-                pkg_benefeciary_management.pr_process_group(p_req, l_group_resp, l_status, l_err_msg, l_err_code);
+                package_bnf_managament.pr_process_group(p_req, l_group_resp, l_status, l_err_msg, l_err_code);
                 
             END IF;
  
@@ -9355,13 +9355,13 @@ EXCEPTION
         ROLLBACK;
 
         p_status   := 'W';
-        p_err_code := 'IFMS-COREDE-OTS-BENF-ERR-01';
+        p_err_code := 'ffm-COR-OTS-BENF-ERR-01';
         p_resp     := '{"status":"FAILURE"}';
 
         BEGIN
-            pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_save_scheme',
+            package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_managament',
+                p_proc_name   => 'package_bnf_managament.pr_save_scheme',
                 p_type        => 1,
                 p_ref_no      => l_scheme_id,
                 p_err_code    => p_err_code,
@@ -9379,9 +9379,9 @@ EXCEPTION
         ROLLBACK;
 
         BEGIN
-            pkg_benefeciary_management.ots_benf_error_log(
-                p_module_name => 'pkg_benefeciary_management',
-                p_proc_name   => 'pkg_benefeciary_management.pr_save_scheme',
+            package_bnf_pns.ots_benf_error_log(
+                p_module_name => 'package_bnf_managament',
+                p_proc_name   => 'package_bnf_managament.pr_save_scheme',
                 p_type        => 1,
                 p_ref_no      => l_scheme_id,
                 p_err_code    => TO_CHAR(SQLCODE),
@@ -9396,7 +9396,7 @@ EXCEPTION
                 NULL;
         END;
 
-        pkg_benefeciary_management.p_set_error(
+        package_bnf_managament.p_set_error(
             SQLERRM,
             TO_CHAR(SQLCODE),
             p_resp,
@@ -9407,4 +9407,4 @@ EXCEPTION
    
 END;
 
-END pkg_benefeciary_management;
+END package_bnf_managament;
